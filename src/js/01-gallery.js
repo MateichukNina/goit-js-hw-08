@@ -2,8 +2,9 @@
 import { galleryItems } from './gallery-items';
 
 //  import "simplelightbox/dist/simple-lightbox.min.js";
- import 'simplelightbox/dist/simple-lightbox.min.css';
- import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm';
+
 const galleryList = document.querySelector(".gallery");
 
 // for (let item of galleryItems) {
@@ -27,21 +28,22 @@ const galleryList = document.querySelector(".gallery");
 // }
 
 function createGalery(galleryItems){
-  const makeLiItem = galleryItems.map(({preview, original, description})=>
-  `<li class="gallery__item" style="list-style none">
-    <a class="gallery_link" href="${original}">
-      <img class="gallery_image lazyload" data-src="${preview}" src="${prewiew}" 
-      data-sours="${original}" alt="${description}"/>
+  return galleryItems.map(({preview, original, description}) =>
+  `<li class="gallery__item">
+    <a class="gallery__link" href="${original}">
+      <img class="gallery__image" src="${preview}" alt="${description}" />
     </a>
-  </li>
-  `)
-  join("");
-  galleryList.insertAdjacentHTML("afterbegin", makeLiItem);
+  </li>`
+  )
+  .join("");
+  // galleryList.insertAdjacentHTML("afterbegin", makeLiItem);
 }
-createGalery(galleryItems);
+
+const galleryMarkup = createGalery(galleryItems);
+galleryList.insertAdjacentHTML('beforeend', galleryMarkup)
 
 
- const lightbox = new SimpleLightbox(".gallery a", {
+ let modalImg = new SimpleLightbox(".gallery a", {
     captions: true,
     captionsData: "alt",
     captionDelay: 250,
